@@ -26,7 +26,8 @@ A browser extension to analyze images using the [Visionati API](https://visionat
 5. Right-click an image on any webpage and select "Scan with Visionati."
 6. View results in the popup—navigate history with arrows, reset via options if needed.
 
-**Note**: Supports raster images (e.g., PNG, JPEG). SVGs may show the menu but won’t process correctly.
+**Supported Formats**: JPEG, PNG, GIF, WebP.
+**Note**: Unsupported formats like SVG will show the right-click menu but result in an error explaining the supported formats.
 
 ## Development
 

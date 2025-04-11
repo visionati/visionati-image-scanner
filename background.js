@@ -9,6 +9,13 @@ const DEFAULT_BACKENDS = [
 ];
 const DEFAULT_HISTORY_DEPTH = 10;
 
+const SUPPORTED_MIME_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "image/webp",
+];
+
 let scanQueue = [];
 let isProcessing = false;
 
@@ -57,6 +64,21 @@ function handleImageResponse(response) {
   if (!response.dataURL) {
     console.error("No valid image Data URL received:", response);
     queueScanResult({ error: "Failed to load image" }, null);
+    return;
+  }
+
+  const dataURLMimeMatch = response.dataURL.match(/^data:([^;]+);base64,/);
+  if (!dataURLMimeMatch || !dataURLMimeMatch[1]) {
+    console.error("Invalid data URL format:", response.dataURL);
+    queueScanResult({ error: "Invalid image data format." }, response.dataURL);
+    return;
+  }
+
+  const mimeType = dataURLMimeMatch[1];
+  if (!SUPPORTED_MIME_TYPES.includes(mimeType)) {
+    const errorMsg = `Unsupported image format: ${mimeType}. Supported formats: ${SUPPORTED_MIME_TYPES.join(", ")}.`;
+    console.error(errorMsg);
+    queueScanResult({ error: errorMsg }, response.dataURL);
     return;
   }
 
