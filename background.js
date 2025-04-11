@@ -21,20 +21,31 @@ let isProcessing = false;
 
 chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.sync.get(
-    ["apiKey", "backends", "historyDepth", "autoOpenPopup"],
+    [
+      "apiKey",
+      "backends",
+      "historyDepth",
+      "autoOpenPopup",
+      "role",
+      "customPrompt",
+    ],
     (data) => {
       let settings = data || {};
       if (
         !settings.apiKey &&
         !settings.backends &&
         !settings.historyDepth &&
-        settings.autoOpenPopup === undefined
+        settings.autoOpenPopup === undefined &&
+        !settings.role &&
+        !settings.customPrompt
       ) {
         chrome.storage.sync.set({
           apiKey: "",
           backends: DEFAULT_BACKENDS,
           historyDepth: DEFAULT_HISTORY_DEPTH,
           autoOpenPopup: true,
+          role: "general",
+          customPrompt: "",
         });
       }
     },
@@ -91,28 +102,47 @@ function handleImageResponse(response) {
     return;
   }
 
-  chrome.storage.sync.get(["apiKey", "backends"], (data) => {
-    const apiKey = data.apiKey || "";
-    const backends = data.backends || [];
+  chrome.storage.sync.get(
+    ["apiKey", "backends", "role", "customPrompt"],
+    (data) => {
+      const apiKey = data.apiKey || "";
+      const backends = data.backends || [];
+      const role = data.role || "general";
+      const customPrompt = data.customPrompt || "";
 
-    if (!apiKey) {
-      queueScanResult(
-        { error: "API key not set. Please configure in options." },
+      if (!apiKey) {
+        queueScanResult(
+          { error: "API key not set. Please configure in options." },
+          response.dataURL,
+        );
+        return;
+      }
+
+      fetchImageAnalysis(
         response.dataURL,
+        apiKey,
+        backends,
+        role,
+        customPrompt,
       );
-      return;
-    }
-
-    fetchImageAnalysis(response.dataURL, apiKey, backends);
-  });
+    },
+  );
 }
 
-async function fetchImageAnalysis(dataURL, apiKey, backends) {
+async function fetchImageAnalysis(
+  dataURL,
+  apiKey,
+  backends,
+  role,
+  customPrompt,
+) {
   const payload = {
     feature: ["nsfw", "tags", "descriptions"],
     file: [dataURL],
     backend: backends,
     tag_score: 0.85,
+    role: role,
+    prompt: customPrompt,
   };
 
   try {

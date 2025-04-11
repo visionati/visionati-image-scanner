@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const apiKeyInput = document.getElementById("apiKey");
   const historyDepthSelect = document.getElementById("historyDepth");
   const autoOpenPopupCheckbox = document.getElementById("autoOpenPopup");
+  const roleSelect = document.getElementById("role");
+  const customPromptTextarea = document.getElementById("customPrompt");
   const backendCheckboxes = document.querySelectorAll("input[name='backend']");
   const saveButton = document.getElementById("save");
   const resetHistoryButton = document.getElementById("resetHistory");
@@ -22,6 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   historyDepthSelect.addEventListener("change", updateSaveButtonState);
   autoOpenPopupCheckbox.addEventListener("change", updateSaveButtonState);
+  roleSelect.addEventListener("change", updateSaveButtonState);
+  customPromptTextarea.addEventListener("input", updateSaveButtonState);
 
   const defaultBackends = [
     "claude",
@@ -34,17 +38,28 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   chrome.storage.sync.get(
-    ["apiKey", "backends", "historyDepth", "autoOpenPopup"],
+    [
+      "apiKey",
+      "backends",
+      "historyDepth",
+      "autoOpenPopup",
+      "role",
+      "customPrompt",
+    ],
     (data) => {
       const apiKey = data.apiKey || "";
       const backends = data.backends || defaultBackends;
       const historyDepth = data.historyDepth || "10";
       const autoOpenPopup =
         data.autoOpenPopup !== undefined ? data.autoOpenPopup : true;
+      const role = data.role || "general";
+      const customPrompt = data.customPrompt || "";
 
       apiKeyInput.value = apiKey;
       historyDepthSelect.value = historyDepth;
       autoOpenPopupCheckbox.checked = autoOpenPopup;
+      roleSelect.value = role;
+      customPromptTextarea.value = customPrompt;
       backendCheckboxes.forEach((checkbox) => {
         checkbox.checked = backends.includes(checkbox.value);
       });
@@ -56,6 +71,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const apiKey = apiKeyInput.value.trim();
     const historyDepth = parseInt(historyDepthSelect.value, 10);
     const autoOpenPopup = autoOpenPopupCheckbox.checked;
+    const role = roleSelect.value;
+    const customPrompt = customPromptTextarea.value.trim();
     const backends = Array.from(backendCheckboxes)
       .filter((checkbox) => checkbox.checked)
       .map((checkbox) => checkbox.value);
@@ -71,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     chrome.storage.sync.set(
-      { apiKey, backends, historyDepth, autoOpenPopup },
+      { apiKey, backends, historyDepth, autoOpenPopup, role, customPrompt },
       () => {
         chrome.storage.local.get("scanHistory", (localData) => {
           let scanHistory = localData.scanHistory || [];

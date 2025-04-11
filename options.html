@@ -12,9 +12,15 @@
         display: block;
         margin: 5px 0;
       }
-      input[type="text"] {
+      input[type="text"],
+      textarea {
         width: 100%;
         padding: 5px;
+        box-sizing: border-box;
+      }
+      textarea {
+        height: 80px;
+        resize: vertical;
       }
       button {
         margin-top: 10px;
@@ -31,6 +37,7 @@
         font-size: 0.9em;
         font-style: italic;
         color: #888;
+        margin-bottom: 10px;
       }
       h1 {
         color: #ed7b2d;
@@ -90,6 +97,29 @@
       <input type="checkbox" id="autoOpenPopup" checked />
       Automatically open popup after scan
       <span class="note">(not supported in Firefox)</span>
+    </label>
+    <label for="role">
+      Role:<br />
+      <select id="role" name="role">
+        <option value="artist">Artist</option>
+        <option value="caption">Caption</option>
+        <option value="comedian">Comedian</option>
+        <option value="critic">Critic</option>
+        <option value="general">General</option>
+        <option value="ecommerce">Ecommerce</option>
+        <option value="inspector">Inspector</option>
+        <option value="promoter">Promoter</option>
+        <option value="prompt">Prompt</option>
+        <option value="realtor">Realtor</option>
+        <option value="tweet">Tweet</option>
+      </select>
+    </label>
+    <label for="customPrompt">
+      Custom Prompt:<br />
+      <textarea
+        id="customPrompt"
+        placeholder="Enter a custom prompt to guide the analysis (optional)"
+      ></textarea>
     </label>
     <h3>Description Backends</h3>
     <div class="backend-group">
