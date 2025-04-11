@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Visionati Scan Results</title>
+    <style>
+      body {
+        width: 350px;
+        padding: 15px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+      #history-toolbar {
+        display: flex;
+        justify-content: space-between; /* Arrows at ends, index in middle */
+        align-items: center;
+        margin-bottom: 10px;
+        background: #e0e0e0;
+        padding: 4px 8px;
+        border-radius: 4px;
+      }
+      #history-toolbar button {
+        background: #666;
+        color: white;
+        border: none;
+        padding: 4px 8px;
+        cursor: pointer;
+        border-radius: 3px;
+        font-size: 12px;
+        transition: background 0.2s;
+      }
+      #history-toolbar button:hover {
+        background: #555;
+      }
+      #history-toolbar button:disabled {
+        background: #999;
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+      #history-toolbar span {
+        color: #333;
+        font-style: italic;
+        padding: 4px 8px;
+        min-width: 40px;
+        text-align: center;
+        line-height: 1;
+      }
+      h1 {
+        color: #ed7b2d;
+        font-size: 18px;
+        margin: 0 0 10px;
+      }
+      #preview {
+        margin-bottom: 15px;
+      }
+      #preview img {
+        max-width: 100px;
+        max-height: 100px;
+        border: 1px solid #282c33;
+      }
+      #status {
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #666;
+      }
+      #description,
+      #tags,
+      #nsfw {
+        margin-bottom: 15px;
+      }
+      .label {
+        font-weight: bold;
+        color: #ed7b2d;
+        margin-bottom: 5px;
+      }
+      .toolbar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 5px 0;
+        background: #fff3e8;
+        padding: 4px 8px;
+        border-radius: 4px;
+      }
+      .toolbar button {
+        background: #ed7b2d;
+        color: white;
+        border: none;
+        padding: 4px 8px;
+        cursor: pointer;
+        border-radius: 3px;
+        font-size: 12px;
+        transition: background 0.2s;
+      }
+      .toolbar button:hover {
+        background: #d96a1e;
+      }
+      .toolbar span {
+        color: #666;
+        font-style: italic;
+        padding: 4px 8px;
+        min-width: 60px;
+        text-align: center;
+        line-height: 1;
+      }
+      #error {
+        color: #d9534f;
+        background: #f9e6e6;
+        padding: 10px;
+        border-radius: 4px;
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="history-toolbar">
+      <button id="prev-scan"><</button>
+      <span id="scan-index"></span>
+      <button id="next-scan">></button>
+    </div>
+    <h1>Visionati Scan Results</h1>
+    <div id="preview" class="hidden">
+      <img id="preview-image" src="" alt="Scanned Image Preview" />
+    </div>
+    <div id="status">Loading...</div>
+    <div id="error" class="hidden"></div>
+    <div id="description" class="hidden">
+      <div class="label">Description</div>
+      <div id="description-text"></div>
+      <div class="toolbar">
+        <button id="prev-desc"><</button>
+        <button id="copy-desc">Copy</button>
+        <button id="next-desc">></button>
+        <span id="desc-source"></span>
+      </div>
+    </div>
+    <div id="tags" class="hidden">
+      <div class="label">Tags</div>
+      <div id="tags-list"></div>
+    </div>
+    <div id="nsfw" class="hidden">
+      <div class="label">NSFW</div>
+      <div id="nsfw-status"></div>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>

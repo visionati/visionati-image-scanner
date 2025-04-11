@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Visionati Image Scanner Settings</title>
+    <style>
+      body {
+        width: 350px;
+        padding: 15px;
+        font-family: Arial, sans-serif;
+      }
+      label {
+        display: block;
+        margin: 5px 0;
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 5px;
+      }
+      button {
+        margin-top: 10px;
+        padding: 5px 10px;
+        background-color: #ed7b2d;
+        color: #ffffff;
+        border: none;
+        cursor: pointer;
+      }
+      button:disabled {
+        background-color: #cccccc;
+      }
+      p {
+        font-size: 0.9em;
+        font-style: italic;
+        color: #888;
+      }
+      h1 {
+        color: #ed7b2d;
+      }
+      h3 {
+        margin-top: 20px;
+      }
+      .backend-group {
+        padding-left: 0;
+      }
+      #status {
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 4px;
+        font-size: 0.95em;
+        text-align: center;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+      }
+      #status.success {
+        color: #ed7b2d;
+        background-color: #fff3e8;
+        opacity: 1;
+      }
+      #status.error {
+        color: #d9534f;
+        background-color: #f9e6e6;
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Visionati Settings</h1>
+    <label for="apiKey">
+      API Key:
+      <input
+        type="text"
+        id="apiKey"
+        placeholder="Enter your Visionati API Key"
+      />
+    </label>
+    <label for="historyDepth">
+      History Depth:<br />
+      <select id="historyDepth">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+      </select>
+    </label>
+    <h3>Description Backends</h3>
+    <div class="backend-group">
+      <label for="backend-bakllava">
+        <input
+          type="checkbox"
+          id="backend-bakllava"
+          name="backend"
+          value="bakllava"
+        />
+        BakLLaVA
+      </label>
+      <label for="backend-claude">
+        <input
+          type="checkbox"
+          id="backend-claude"
+          name="backend"
+          value="claude"
+        />
+        Claude*
+      </label>
+      <label for="backend-gemini">
+        <input
+          type="checkbox"
+          id="backend-gemini"
+          name="backend"
+          value="gemini"
+        />
+        Gemini*
+      </label>
+      <label for="backend-grok">
+        <input type="checkbox" id="backend-grok" name="backend" value="grok" />
+        Grok*
+      </label>
+      <label for="backend-jinaai">
+        <input
+          type="checkbox"
+          id="backend-jinaai"
+          name="backend"
+          value="jinaai"
+        />
+        Jina AI
+      </label>
+      <label for="backend-llava">
+        <input
+          type="checkbox"
+          id="backend-llava"
+          name="backend"
+          value="llava"
+        />
+        LLaVA
+      </label>
+      <label for="backend-openai">
+        <input
+          type="checkbox"
+          id="backend-openai"
+          name="backend"
+          value="openai"
+        />
+        OpenAI*
+      </label>
+    </div>
+    <h3>Tagging/NSFW Backends</h3>
+    <div class="backend-group">
+      <label for="backend-clarifai">
+        <input
+          type="checkbox"
+          id="backend-clarifai"
+          name="backend"
+          value="clarifai"
+        />
+        Clarifai*
+      </label>
+      <label for="backend-googlevision">
+        <input
+          type="checkbox"
+          id="backend-googlevision"
+          name="backend"
+          value="googlevision"
+        />
+        Google Vision*
+      </label>
+      <label for="backend-imagga">
+        <input
+          type="checkbox"
+          id="backend-imagga"
+          name="backend"
+          value="imagga"
+        />
+        Imagga
+      </label>
+      <label for="backend-rekognition">
+        <input
+          type="checkbox"
+          id="backend-rekognition"
+          name="backend"
+          value="rekognition"
+        />
+        Rekognition*
+      </label>
+    </div>
+    <p>
+      * Recommended services which provide the best results with the fastest
+      response times.
+    </p>
+    <button id="save">Save Settings</button>
+    <button id="resetHistory">Reset History</button>
+    <div id="status"></div>
+    <script src="options.js"></script>
+  </body>
+</html>
