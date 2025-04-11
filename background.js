@@ -20,16 +20,25 @@ let scanQueue = [];
 let isProcessing = false;
 
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.sync.get(["apiKey", "backends", "historyDepth"], (data) => {
-    let settings = data || {};
-    if (!settings.apiKey && !settings.backends && !settings.historyDepth) {
-      chrome.storage.sync.set({
-        apiKey: "",
-        backends: DEFAULT_BACKENDS,
-        historyDepth: DEFAULT_HISTORY_DEPTH,
-      });
-    }
-  });
+  chrome.storage.sync.get(
+    ["apiKey", "backends", "historyDepth", "autoOpenPopup"],
+    (data) => {
+      let settings = data || {};
+      if (
+        !settings.apiKey &&
+        !settings.backends &&
+        !settings.historyDepth &&
+        settings.autoOpenPopup === undefined
+      ) {
+        chrome.storage.sync.set({
+          apiKey: "",
+          backends: DEFAULT_BACKENDS,
+          historyDepth: DEFAULT_HISTORY_DEPTH,
+          autoOpenPopup: true,
+        });
+      }
+    },
+  );
 
   chrome.contextMenus.create({
     id: "scanImage",
@@ -144,8 +153,10 @@ function processScanQueue() {
 }
 
 function setScanResult(result, dataURL) {
-  chrome.storage.sync.get("historyDepth", (syncData) => {
+  chrome.storage.sync.get(["historyDepth", "autoOpenPopup"], (syncData) => {
     const historyDepth = syncData.historyDepth || DEFAULT_HISTORY_DEPTH;
+    const autoOpenPopup =
+      syncData.autoOpenPopup !== undefined ? syncData.autoOpenPopup : true;
     chrome.storage.local.get("scanHistory", (localData) => {
       let scanHistory = localData.scanHistory || [];
       const newScan = { ...result, dataURL, timestamp: Date.now() };
@@ -162,14 +173,14 @@ function setScanResult(result, dataURL) {
       chrome.storage.local.set(
         { scanHistory, currentScanIndex, latestScanId: scanId },
         () => {
-          if (chrome.action && chrome.action.openPopup) {
+          if (autoOpenPopup && chrome.action && chrome.action.openPopup) {
             chrome.action
               .openPopup()
               .then(() => console.log("Popup opened successfully"))
               .catch((err) => console.error("Popup Error:", err.message));
           } else {
             console.log(
-              "Popup not supported; click the extension icon to view results.",
+              "Popup not opened; auto-open disabled or not supported. Click the extension icon to view results.",
             );
           }
           isProcessing = false;

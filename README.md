@@ -22,12 +22,13 @@ A browser extension to analyze images using the [Visionati API](https://visionat
 1. Open the extension’s options (right-click icon > "Options" or via `chrome://extensions/`).
 2. Enter your Visionati API key from [api.visionati.com](https://api.visionati.com).
 3. Select desired AI backends (e.g., OpenAI for descriptions, Google Vision for tags).
-4. Set history depth (default: 10) and save settings.
-5. Right-click an image on any webpage and select "Scan with Visionati."
-6. View results in the popup—navigate history with arrows, reset via options if needed.
+4. Set history depth (default: 10) and choose whether to automatically open the popup after scanning (default: enabled).
+5. Save settings.
+6. Right-click an image on any webpage and select "Scan with Visionati."
+7. View results in the popup (if auto-open is enabled) or by clicking the extension icon—navigate history with arrows, reset via options if needed.
 
 **Supported Formats**: JPEG, PNG, GIF, WebP.
-**Note**: Unsupported formats like SVG will show the right-click menu but result in an error explaining the supported formats.
+**Note**: Unsupported formats like SVG will show the right-click menu but result in an error explaining the supported formats. The "Automatically open popup after scan" option is not supported in Firefox; Firefox users must manually click the extension icon to view results.
 
 ## Development
 

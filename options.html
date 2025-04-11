@@ -60,6 +60,11 @@
         background-color: #f9e6e6;
         opacity: 1;
       }
+      .note {
+        font-size: 0.8em;
+        color: #666;
+        margin-left: 5px;
+      }
     </style>
   </head>
   <body>
@@ -80,6 +85,11 @@
         <option value="25">25</option>
         <option value="50">50</option>
       </select>
+    </label>
+    <label for="autoOpenPopup">
+      <input type="checkbox" id="autoOpenPopup" checked />
+      Automatically open popup after scan
+      <span class="note">(not supported in Firefox)</span>
     </label>
     <h3>Description Backends</h3>
     <div class="backend-group">

@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const apiKeyInput = document.getElementById("apiKey");
   const historyDepthSelect = document.getElementById("historyDepth");
+  const autoOpenPopupCheckbox = document.getElementById("autoOpenPopup");
   const backendCheckboxes = document.querySelectorAll("input[name='backend']");
   const saveButton = document.getElementById("save");
   const resetHistoryButton = document.getElementById("resetHistory");
@@ -20,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     checkbox.addEventListener("change", updateSaveButtonState);
   });
   historyDepthSelect.addEventListener("change", updateSaveButtonState);
+  autoOpenPopupCheckbox.addEventListener("change", updateSaveButtonState);
 
   const defaultBackends = [
     "claude",
@@ -31,22 +33,29 @@ document.addEventListener("DOMContentLoaded", () => {
     "rekognition",
   ];
 
-  chrome.storage.sync.get(["apiKey", "backends", "historyDepth"], (data) => {
-    const apiKey = data.apiKey || "";
-    const backends = data.backends || defaultBackends;
-    const historyDepth = data.historyDepth || "10";
+  chrome.storage.sync.get(
+    ["apiKey", "backends", "historyDepth", "autoOpenPopup"],
+    (data) => {
+      const apiKey = data.apiKey || "";
+      const backends = data.backends || defaultBackends;
+      const historyDepth = data.historyDepth || "10";
+      const autoOpenPopup =
+        data.autoOpenPopup !== undefined ? data.autoOpenPopup : true;
 
-    apiKeyInput.value = apiKey;
-    historyDepthSelect.value = historyDepth;
-    backendCheckboxes.forEach((checkbox) => {
-      checkbox.checked = backends.includes(checkbox.value);
-    });
-    updateSaveButtonState();
-  });
+      apiKeyInput.value = apiKey;
+      historyDepthSelect.value = historyDepth;
+      autoOpenPopupCheckbox.checked = autoOpenPopup;
+      backendCheckboxes.forEach((checkbox) => {
+        checkbox.checked = backends.includes(checkbox.value);
+      });
+      updateSaveButtonState();
+    },
+  );
 
   saveButton.addEventListener("click", () => {
     const apiKey = apiKeyInput.value.trim();
     const historyDepth = parseInt(historyDepthSelect.value, 10);
+    const autoOpenPopup = autoOpenPopupCheckbox.checked;
     const backends = Array.from(backendCheckboxes)
       .filter((checkbox) => checkbox.checked)
       .map((checkbox) => checkbox.value);
@@ -61,22 +70,25 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    chrome.storage.sync.set({ apiKey, backends, historyDepth }, () => {
-      chrome.storage.local.get("scanHistory", (localData) => {
-        let scanHistory = localData.scanHistory || [];
-        while (scanHistory.length > historyDepth) {
-          scanHistory.shift();
-        }
-        chrome.storage.local.set({ scanHistory }, () => {
-          statusDiv.textContent = "Settings saved!";
-          statusDiv.className = "success";
-          setTimeout(() => {
-            statusDiv.textContent = "";
-            statusDiv.className = "";
-          }, 2000);
+    chrome.storage.sync.set(
+      { apiKey, backends, historyDepth, autoOpenPopup },
+      () => {
+        chrome.storage.local.get("scanHistory", (localData) => {
+          let scanHistory = localData.scanHistory || [];
+          while (scanHistory.length > historyDepth) {
+            scanHistory.shift();
+          }
+          chrome.storage.local.set({ scanHistory }, () => {
+            statusDiv.textContent = "Settings saved!";
+            statusDiv.className = "success";
+            setTimeout(() => {
+              statusDiv.textContent = "";
+              statusDiv.className = "";
+            }, 2000);
+          });
         });
-      });
-    });
+      },
+    );
   });
 
   resetHistoryButton.addEventListener("click", () => {
