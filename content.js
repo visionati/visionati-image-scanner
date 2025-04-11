@@ -1,6 +1,14 @@
 async function toDataURL(url) {
+  if (url.startsWith("data:image/")) {
+    return url;
+  }
   return fetch(url)
-    .then((response) => response.blob())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      return response.blob();
+    })
     .then((blob) => {
       return new Promise((resolve) => {
         const reader = new FileReader();
@@ -9,16 +17,20 @@ async function toDataURL(url) {
       });
     })
     .catch((err) => {
-      console.error("Fetch error:", err);
-      return null;
+      console.error("Fetch error:", err.message);
+      throw err;
     });
 }
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "getImageDataURL") {
-    toDataURL(message.url).then((dataURL) => {
-      sendResponse({ dataURL });
-    });
+    toDataURL(message.url)
+      .then((dataURL) => {
+        sendResponse({ dataURL, error: null });
+      })
+      .catch((err) => {
+        sendResponse({ dataURL: null, error: err.message });
+      });
   }
   return true;
 });

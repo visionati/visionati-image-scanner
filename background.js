@@ -42,9 +42,21 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 });
 
 function handleImageResponse(response) {
-  if (!response || !response.dataURL) {
+  if (!response) {
+    console.error("No response received from content script");
+    queueScanResult({ error: "No response from content script" }, null);
+    return;
+  }
+
+  if (response.error) {
+    console.error("Image load error:", response.error);
+    queueScanResult({ error: response.error }, response.dataURL);
+    return;
+  }
+
+  if (!response.dataURL) {
     console.error("No valid image Data URL received:", response);
-    queueScanResult({ error: "Failed to load image" }, response?.dataURL);
+    queueScanResult({ error: "Failed to load image" }, null);
     return;
   }
 
@@ -122,7 +134,8 @@ function setScanResult(result, dataURL) {
         scanHistory.shift();
       }
 
-      const scanId = newScan.scanId;
+      const scanId =
+        newScan.scanId || (result.error ? `error-${Date.now()}` : null);
       const currentScanIndex = scanHistory.length - 1;
       chrome.storage.local.set(
         { scanHistory, currentScanIndex, latestScanId: scanId },
