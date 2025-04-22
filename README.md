@@ -13,9 +13,9 @@ A browser extension to analyze images using the [Visionati API](https://visionat
 
 ## Installation
 
-1. Clone this repo: `git clone https://github.com/visionati/visionati-image-scanner.git`
-2. **Chrome**: Go to `chrome://extensions/`, enable "Developer mode," click "Load unpacked," and select the `visionati-image-scanner` folder.
-3. **Firefox**: Visit [https://addons.mozilla.org/en-US/firefox/addon/visionati-image-scanner/](https://addons.mozilla.org/en-US/firefox/addon/visionati-image-scanner/) and click "Add to Firefox"!
+1. **Chrome/Brave/Edge**: Visit [https://chromewebstore.google.com/detail/gdfpjjaflomhniipphhangfaodlhjifb](https://chromewebstore.google.com/detail/gdfpjjaflomhniipphhangfaodlhjifb) and click "Add to Chrome/Brave/Edge"
+2. **Firefox**: Visit [https://addons.mozilla.org/en-US/firefox/addon/visionati-image-scanner/](https://addons.mozilla.org/en-US/firefox/addon/visionati-image-scanner/) and click "Add to Firefox"!
+3. To install from source, clone this repo: `git clone https://github.com/visionati/visionati-image-scanner.git`. For Chrome based browsers go to `chrome://extensions/`, enable "Developer mode," click "Load unpacked," and select the `visionati-image-scanner` folder. For Firefox go to `about:debugging#/runtime/this-firefox`, click "Load Temporary Add-on," and choose `manifest.json` from the folder.
 
 ## Usage
 
