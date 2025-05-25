@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const historyDepthSelect = document.getElementById("historyDepth");
   const autoOpenPopupCheckbox = document.getElementById("autoOpenPopup");
   const roleSelect = document.getElementById("role");
+  const languageSelect = document.getElementById("language");
   const customPromptTextarea = document.getElementById("customPrompt");
   const backendCheckboxes = document.querySelectorAll("input[name='backend']");
   const saveButton = document.getElementById("save");
@@ -25,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   historyDepthSelect.addEventListener("change", updateSaveButtonState);
   autoOpenPopupCheckbox.addEventListener("change", updateSaveButtonState);
   roleSelect.addEventListener("change", updateSaveButtonState);
+  languageSelect.addEventListener("change", updateSaveButtonState);
   customPromptTextarea.addEventListener("input", updateSaveButtonState);
 
   const defaultBackends = [
@@ -44,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "historyDepth",
       "autoOpenPopup",
       "role",
+      "language",
       "customPrompt",
     ],
     (data) => {
@@ -53,12 +56,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const autoOpenPopup =
         data.autoOpenPopup !== undefined ? data.autoOpenPopup : true;
       const role = data.role || "general";
+      const language = data.language || "English";
       const customPrompt = data.customPrompt || "";
 
       apiKeyInput.value = apiKey;
       historyDepthSelect.value = historyDepth;
       autoOpenPopupCheckbox.checked = autoOpenPopup;
       roleSelect.value = role;
+      languageSelect.value = language;
       customPromptTextarea.value = customPrompt;
       backendCheckboxes.forEach((checkbox) => {
         checkbox.checked = backends.includes(checkbox.value);
@@ -72,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const historyDepth = parseInt(historyDepthSelect.value, 10);
     const autoOpenPopup = autoOpenPopupCheckbox.checked;
     const role = roleSelect.value;
+    const language = languageSelect.value;
     const customPrompt = customPromptTextarea.value.trim();
     const backends = Array.from(backendCheckboxes)
       .filter((checkbox) => checkbox.checked)
@@ -88,7 +94,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     chrome.storage.sync.set(
-      { apiKey, backends, historyDepth, autoOpenPopup, role, customPrompt },
+      {
+        apiKey,
+        backends,
+        historyDepth,
+        autoOpenPopup,
+        role,
+        language,
+        customPrompt,
+      },
       () => {
         chrome.storage.local.get("scanHistory", (localData) => {
           let scanHistory = localData.scanHistory || [];

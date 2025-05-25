@@ -27,10 +27,12 @@ chrome.runtime.onInstalled.addListener(() => {
       "historyDepth",
       "autoOpenPopup",
       "role",
+      "language",
       "customPrompt",
     ],
     (data) => {
       let settings = data || {};
+
       if (
         !settings.apiKey &&
         !settings.backends &&
@@ -45,7 +47,12 @@ chrome.runtime.onInstalled.addListener(() => {
           historyDepth: DEFAULT_HISTORY_DEPTH,
           autoOpenPopup: true,
           role: "general",
+          language: "English",
           customPrompt: "",
+        });
+      } else if (!settings.language) {
+        chrome.storage.sync.set({
+          language: "English",
         });
       }
     },
@@ -103,11 +110,12 @@ function handleImageResponse(response) {
   }
 
   chrome.storage.sync.get(
-    ["apiKey", "backends", "role", "customPrompt"],
+    ["apiKey", "backends", "role", "language", "customPrompt"],
     (data) => {
       const apiKey = data.apiKey || "";
       const backends = data.backends || [];
       const role = data.role || "general";
+      const language = data.language || "English";
       const customPrompt = data.customPrompt || "";
 
       if (!apiKey) {
@@ -123,6 +131,7 @@ function handleImageResponse(response) {
         apiKey,
         backends,
         role,
+        language,
         customPrompt,
       );
     },
@@ -134,6 +143,7 @@ async function fetchImageAnalysis(
   apiKey,
   backends,
   role,
+  language,
   customPrompt,
 ) {
   const payload = {
@@ -142,6 +152,7 @@ async function fetchImageAnalysis(
     backend: backends,
     tag_score: 0.85,
     role: role,
+    language: language,
     prompt: customPrompt,
   };
 
