@@ -5,7 +5,9 @@ A browser extension to analyze images using the [Visionati API](https://visionat
 ## Features
 
 - **Image Analysis**: Converts images to Base64 Data URLs for secure API calls to Visionati.
+- **Alt Text Generation**: Use the Alt Text role to generate concise, accessibility-focused alt text for any image.
 - **Customizable Backends**: Choose from multiple AI providers (e.g., OpenAI, Grok, Google Vision, Claude) in settings.
+- **12 Built-in Roles**: Alt Text, Artist, Caption, Comedian, Critic, Ecommerce, General, Inspector, Promoter, Prompt, Realtor, and Tweet.
 - **Results Popup**: Displays descriptions, tags, and NSFW status with async polling for real-time updates.
 - **Scan History**: Stores recent scans (configurable depth: 5, 10, 25, 50) with navigation via toolbar arrows.
 - **Error Handling**: Shows errors (e.g., "API key not set") and clears them on successful scans; displays "No results returned" when applicable.
@@ -23,7 +25,7 @@ A browser extension to analyze images using the [Visionati API](https://visionat
 2. Enter your Visionati API key from [api.visionati.com](https://api.visionati.com).
 3. Select desired AI backends (e.g., OpenAI for descriptions, Google Vision for tags).
 4. Set history depth (default: 10) and choose whether to automatically open the popup after scanning (default: enabled).
-5. Choose your role (default: General) to tailor analysis (e.g., artistic focus for Artist, social media style for Tweet) and enter a custom prompt to guide the analysis (optional).
+5. Choose your role (default: General) to tailor analysis (e.g., Alt Text for accessibility, Artist for artistic analysis, Ecommerce for product descriptions, Tweet for social media) and enter a custom prompt to guide the analysis (optional).
 6. Save settings.
 7. Right-click an image on any webpage and select "Scan with Visionati."
 8. View results in the popup (if auto-open is enabled) or by clicking the extension icon—navigate history with arrows, reset via options if needed.
