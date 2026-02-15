@@ -1,5 +1,7 @@
 # Visionati Image Scanner
 
+![Visionati Image Scanner](.store-assets/promo-marquee-1400x560.png)
+
 A browser extension to analyze images using the [Visionati API](https://visionati.com). Right-click any image on a webpage to get AI-generated descriptions, tags, and NSFW status.
 
 ## Features
@@ -21,7 +23,7 @@ A browser extension to analyze images using the [Visionati API](https://visionat
 
 ## Usage
 
-1. Open the extension’s options (right-click icon > "Options" or via `chrome://extensions/`).
+1. Open the extension's options (right-click icon > "Options" or via `chrome://extensions/`).
 2. Enter your Visionati API key from [api.visionati.com](https://api.visionati.com).
 3. Select desired AI backends (e.g., OpenAI for descriptions, Google Vision for tags).
 4. Set history depth (default: 10) and choose whether to automatically open the popup after scanning (default: enabled).
@@ -36,11 +38,23 @@ A browser extension to analyze images using the [Visionati API](https://visionat
 ## Development
 
 - **Manifest**: Built with Manifest V3 for Chrome and Firefox compatibility.
-- **API**: Uses Visionati’s `POST /api/fetch` endpoint—see [docs.visionati.com](https://docs.visionati.com) for details.
+- **API**: Uses Visionati's `POST /api/fetch` endpoint—see [docs.visionati.com](https://docs.visionati.com) for details.
 - **Files**:
   - `background.js`: Handles API calls and history management.
   - `popup.js/html`: Displays results and navigation.
   - `options.js/html`: Configures API key, backends, and history settings.
+  - `content.js`: Converts images to Base64 Data URLs.
+
+## Store Assets
+
+Promotional images and publishing resources for the Chrome Web Store and Firefox Add-ons are in [`.store-assets/`](.store-assets/).
+
+| Asset | Preview |
+|-------|---------|
+| Small Promo (440×280) | ![Small Promo](.store-assets/promo-small-440x280.png) |
+| Marquee Promo (1400×560) | ![Marquee Promo](.store-assets/promo-marquee-1400x560.png) |
+
+See [`.store-assets/README.md`](.store-assets/README.md) for the full screenshot plan, store listing copy, and publishing checklist.
 
 ## Contributing
 
