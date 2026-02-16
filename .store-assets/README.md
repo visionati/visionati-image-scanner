@@ -17,24 +17,14 @@ Already in the repo root. No duplicates needed here.
 Chrome Web Store accepts **1280×800** or **640×400** PNG/JPEG (up to 5 screenshots).
 Firefox Add-ons accepts any reasonable size (aim for **1280×800** for consistency).
 
-Capture from Chrome with the extension installed. Use a clean browsing session (no other extensions visible). Save as PNG.
+All screenshots captured from Brave (Chromium-based, works for both Chrome Web Store and Firefox Add-ons listings). Source image: Hi'ilawe Falls, Waipio Valley on Unsplash.
 
-| File | What to Capture | Tips | Status |
-|------|----------------|------|--------|
-| `screenshot-1.png` | **Right-click context menu**: "Scan with Visionati" menu item on an interesting image (nature, food, architecture, etc.) | Use a visually appealing webpage. Show the context menu overlaying the image so the workflow is obvious in one glance. Crop to show the image and menu together, not the full browser window. | ⏳ Needed |
-| `screenshot-2.png` | **Scan results: description**: Popup showing image preview, a compelling AI description, and the source/cycling toolbar | Pick an image that produces a vivid, impressive description. Show the prev/next and Copy buttons so people see they get multiple AI perspectives. | ⏳ Needed |
-| `screenshot-3.png` | **Scan results: tags and NSFW**: Popup scrolled down to show tags with confidence scores and NSFW status | Use a safe image with diverse, interesting tags. The tag list and NSFW "safe" indicator show the detection backends at work. | ⏳ Needed |
-| `screenshot-4.png` | **Scan history**: Navigating between previous scans using the history toolbar arrows | Show a different image/result than screenshot 2-3, with the history index visible (e.g., "2 / 5") to demonstrate the history feature. | ⏳ Needed |
-| `screenshot-5.png` | **Settings page**: API key field, backend checkboxes, role picker, language dropdown, custom prompt textarea | Scroll or resize to show as much of the settings as possible. Have a few backends checked (the recommended ones marked with *). Show a role other than General selected to hint at the variety. | ⏳ Needed |
-
-### Capture Tips
-
-- **Browser window**: use a clean Chrome profile with no bookmarks bar, no other extensions, default theme
-- **Popup screenshots** (2, 3, 4): right-click the extension icon → Inspect Popup, then use DevTools to screenshot the popup at a clean size. Or use a screen capture tool to grab just the popup.
-- **Context menu screenshot** (1): this is the hardest to capture cleanly. Use a timed screenshot tool (e.g., macOS Screenshot with timer, or Snipping Tool delay on Windows) so you can right-click and have the menu open when it fires.
-- **Settings screenshot** (5): open the options page in a tab (`chrome-extension://<id>/options.html`), resize the browser window to ~400px wide to match the extension's `width: 350px` body style, or screenshot the content area only.
-- **Final size**: crop/resize all screenshots to exactly **1280×800** for consistency across both stores. If the content doesn't fill that, center it on a light background (#f5f5f5 or white).
-- **No personal data**: make sure no real API key is visible in screenshots. Use a placeholder or blur it.
+| File | What it Shows | Status |
+|------|--------------|--------|
+| `screenshot-1.png` | **Right-click context menu**: "Scan with Visionati" on the Unsplash image page, showing the entry point | ✅ Ready |
+| `screenshot-2.png` | **Full browser with popup**: Scan results overlaying the Unsplash page, showing the real-world in-context experience | ✅ Ready |
+| `screenshot-3.png` | **Isolated popup**: Detailed view of the description (Gemini), prev/next/Copy cycling toolbar, and tags. Scrollbar visible to indicate more content below. | ✅ Ready |
+| `screenshot-4.png` | **Settings page**: API key, history depth, auto-open toggle, role picker, language, custom prompt, description backends (Claude, Gemini, Grok, OpenAI checked), detection backends (Clarifai, Google Vision, Rekognition checked) | ✅ Ready |
 
 ## Promotional Images (Chrome Web Store)
 
@@ -53,37 +43,42 @@ Generated via `promo-generator.html` (same pattern as WordPress `banner-generato
 
 **Name**: Visionati Image Scanner
 
-**Summary** (132 char max):
-> AI image analysis: right-click any image for descriptions, tags, and NSFW detection. 7 AI models, 12 roles, 160+ languages.
+**Summary**:
+> Right-click any image on the web. Get AI-powered descriptions, alt text, tags, and content screening in seconds.
 
-**Description** (16,000 char max, no markdown):
+**Description** (live on Chrome Web Store):
 ```
-Right-click any image on any webpage to get AI-powered analysis from multiple AI services at once.
+Visionati Image Scanner sends images to the Visionati API, where multiple AI models analyze them and return results directly in your browser. Pick from models by Anthropic, Google, OpenAI, xAI, and others.
 
-WHAT YOU GET
-• AI Descriptions — rich, detailed descriptions from up to 7 AI models (OpenAI, Claude, Gemini, Grok, Jina AI, LLaVA, BakLLaVA). Cycle through them to compare perspectives.
-• Tags — object and concept labels with confidence scores from computer vision services (Clarifai, Google Vision, Imagga, Rekognition).
-• NSFW Detection — content moderation scores so you know what you're looking at.
+What it does:
 
-12 BUILT-IN ROLES
-Tailor the AI's perspective: Alt Text for accessibility, Ecommerce for product descriptions, Caption for social media, Artist for creative analysis, and 8 more. Or write your own custom prompt.
+- Right-click any JPEG, PNG, GIF, or WebP image and select "Scan with Visionati"
+- Get AI-generated descriptions, object tags, and NSFW detection in a popup
+- Generate alt text for accessibility with the dedicated Alt Text role
+- Choose from 12 built-in roles to shape the output: Alt Text, Artist, Caption, Comedian, Critic, Ecommerce, General, Inspector, Promoter, Prompt, Realtor, and Tweet
+- Write custom prompts for full control over what the AI focuses on
+- Output in 160+ languages
+- Browse past scans with navigable history (configurable up to 50 entries)
 
-160+ LANGUAGES
-Get descriptions in English, Spanish, Japanese, Arabic, Hindi, and 155+ other languages.
+Who it's for:
 
-HOW IT WORKS
-1. Install the extension and enter your Visionati API key (get one at api.visionati.com).
-2. Right-click any image and select "Scan with Visionati."
-3. View results in the popup — descriptions, tags, and NSFW status.
-4. Use the Copy button to grab any description instantly.
-5. Navigate scan history with the toolbar arrows.
+- Web developers and content creators who need alt text for accessibility
+- Marketers generating captions and product descriptions from images
+- Anyone curious about what AI sees in an image
 
-Supports JPEG, PNG, GIF, and WebP images.
+Setup:
 
-Powered by the Visionati API — one request, multiple AI perspectives.
+1. Install the extension
+2. Open Settings and enter your Visionati API key (sign up at api.visionati.com)
+3. Pick your AI models, role, and language
+4. Right-click an image and scan
+
+Images are processed securely via the Visionati API. The extension never sends data anywhere else. Settings sync across devices.
+
+Requires a Visionati API account. Sign up and purchase credits at api.visionati.com.
 ```
 
-**Category**: Accessibility (or Productivity)
+**Category**: Tools
 
 **Language**: English
 
@@ -91,42 +86,70 @@ Powered by the Visionati API — one request, multiple AI perspectives.
 
 **Name**: Visionati Image Scanner
 
-**Summary** (250 char max):
-> Right-click any image for AI-powered descriptions, tags, and NSFW detection. 7 AI models, 12 roles, 160+ languages. One scan, multiple perspectives.
+**Summary**:
+> Right-click any image to get AI-powered descriptions, alt text, tags, and content screening. Pick your AI model, choose from 12 roles, and output in 160+ languages. Powered by the Visionati API with models from Anthropic, Google, OpenAI, and xAI.
 
-**Description**: same as Chrome but with markdown formatting (Firefox supports it).
+**Description** (live on Firefox Add-ons):
+```
+Right-click any image on the web. Get AI-powered descriptions, alt text, tags, and content screening in seconds.
 
-**Categories**: Other (Firefox has limited categories for extensions)
+Visionati Image Scanner sends images to the Visionati API, where multiple AI models analyze them and return results directly in your browser. Pick from models by Anthropic, Google, OpenAI, xAI, and others.
 
-**Tags**: images, accessibility, AI, alt text, descriptions, tags
+What it does:
+Right-click any JPEG, PNG, GIF, or WebP image and select "Scan with Visionati"
+Get AI-generated descriptions, object tags, and NSFW detection in a popup
+Generate alt text for accessibility with the dedicated Alt Text role
+Choose from 12 built-in roles to shape the output: Alt Text, Artist, Caption, Comedian, Critic, Ecommerce, General, Inspector, Promoter, Prompt, Realtor, and Tweet
+Write custom prompts for full control over what the AI focuses on
+Output in 160+ languages
+Browse past scans with navigable history (configurable up to 50 entries)
 
-**Note**: Firefox does not support auto-opening the popup after scan. This is mentioned in the extension's options page and should be noted in the description if relevant.
+Who it's for:
+Web developers and content creators who need alt text for accessibility
+Marketers generating captions and product descriptions from images
+Anyone curious about what AI sees in an image
+
+Setup:
+Install the extension
+Open Settings and enter your Visionati API key (sign up at api.visionati.com)
+Pick your AI models, role, and language
+Right-click an image and scan
+
+Images are processed securely via the Visionati API. The extension never sends data anywhere else.
+
+Note: The "Automatically open popup after scan" option is not supported in Firefox. Click the extension icon to view results after scanning.
+
+Requires a Visionati API account. Sign up and purchase credits at api.visionati.com.
+```
+
+**Tags**: image search
 
 ## Publishing Checklist
 
 ### Chrome Web Store
 
-- [ ] All 5 screenshots captured at 1280×800
+- [x] All 4 screenshots captured at 1280×800
 - [x] Small promotional image created (440×280)
 - [x] Marquee promotional image created (1400×560)
-- [ ] Store listing copy reviewed (summary under 132 chars)
-- [ ] Description updated (check that role list and backend list are current)
-- [ ] Category selected
-- [ ] Verify current screenshots match current UI (re-capture if UI has changed)
-- [ ] Privacy policy URL (if required): link to visionati.com privacy page
-- [ ] Test extension from Web Store install (not just unpacked)
+- [x] Store listing copy reviewed
+- [x] Description updated
+- [x] Category selected (Tools)
+- [x] Screenshots match current UI
+- [x] Analytics opted in
+- [x] Privacy policy URL: https://visionati.com/privacy-policy/
+- [x] Test extension from Web Store install
 
 ### Firefox Add-ons
 
-- [ ] Screenshots uploaded (reuse Chrome screenshots)
-- [ ] Summary and description updated
-- [ ] Tags added
-- [ ] Note about popup not auto-opening in Firefox
-- [ ] Test extension from Add-ons install (not just temporary)
+- [x] Screenshots uploaded (reused Brave screenshots)
+- [x] Summary and description updated
+- [x] Tags added
+- [x] Note about popup not auto-opening in Firefox
+- [x] Test extension from Add-ons install
 
 ### Both Stores
 
-- [ ] No real API key visible in any screenshot
-- [ ] Screenshots show current UI (roles, backends, features all match)
-- [ ] Version number in manifest.json matches what's published
-- [ ] README.md in repo root is up to date
+- [x] No real API key visible in any screenshot
+- [x] Screenshots show current UI (roles, backends, features all match)
+- [x] Version number in manifest.json matches what's published
+- [x] README.md in repo root is up to date
