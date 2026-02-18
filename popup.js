@@ -249,9 +249,7 @@ async function pollResponse(uri, scanId, elements) {
       }
 
       const result = await response.json();
-      if (result.status === "processing") {
-        setTimeout(() => pollResponse(uri, scanId, elements), 2000);
-      } else {
+      if (result.status === "completed") {
         chrome.storage.local.get(
           ["scanHistory", "currentScanIndex"],
           (data) => {
@@ -278,6 +276,12 @@ async function pollResponse(uri, scanId, elements) {
             }
           },
         );
+      } else if (result.status === "queued" || result.status === "processing") {
+        setTimeout(() => pollResponse(uri, scanId, elements), 2000);
+      } else {
+        elements.status.textContent = "Error";
+        elements.error.textContent = result.error || "Unexpected response";
+        elements.error.classList.remove("hidden");
       }
     } catch (err) {
       elements.status.textContent = "Error";
